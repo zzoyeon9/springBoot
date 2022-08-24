@@ -1,2 +1,2 @@
 # springBoot
-Learn about SpringBoot and practice by coding serveral exercise 
+Learn about Spring & SpringBoot FrameWork and practice myself by coding serveral exercise
