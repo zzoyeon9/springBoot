@@ -3,13 +3,23 @@ package hellojpa;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "member")
+    @JoinTable(name = "MEMBER_PRODUCT")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
     @Column(name = "name")
     private String username;
