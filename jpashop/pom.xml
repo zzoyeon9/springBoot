@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.3.10.Final</version>
+            <version>5.4.13.Final</version>
         </dependency>
         <!-- H2 데이터베이스 -->
         <dependency>
