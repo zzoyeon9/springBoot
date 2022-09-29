@@ -20,26 +20,20 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("hello");
-            //printMember(member);
-            //printMemberAndTeam(member);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            em.persist(member);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member.getId());
-            //Member findMember = em.find(Member.class, member.getId());
-
-            System.out.println("refMember = " + refMember.getClass());
-
-            Hibernate.initialize(refMember);
-
-            System.out.println("isLoaded" + emf.getPersistenceUnitUtil().isLoaded(refMember));
-            //System.out.println("refMember.getUsername() = " + refMember.getUsername());
-            
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
