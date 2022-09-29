@@ -2,6 +2,8 @@ package jpabook.jpashop.domain;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 public class Member extends BaseEntity {
 
@@ -10,7 +12,7 @@ public class Member extends BaseEntity {
     private Long id;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
