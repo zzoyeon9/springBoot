@@ -17,7 +17,6 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-
         try {
 
             Team team = new Team();
@@ -25,29 +24,31 @@ public class JpaMain {
             em.persist(team);
 
             Member member  = new Member();
-            member.setUsername("member1");
+            member.setUsername("관리자");
             member.setAge(10);
-
             member.setTeam(team);
+
+            em.persist(member);
             em.flush();
             em.clear();
 
-           /* TypedQuery<Member> query1 = em.createQuery("select m from Member m", Member.class);
-            Query query2 = em.createQuery("select m.username, m.age from Member m");
+            String query1 =
+                    "select " +
+                            "case when m.age <= 10 then '학생요금' " +
+                            "     when m.age >= 60 then '경로요금' " +
+                            "     else '일반요금' " +
+                            "end " +
+                            "from Member m";
 
-            List<MemberDTO> resultList = em.createQuery("select new jpql.MemberDTO(m.username, m.age) from Member m", MemberDTO.class)
+            String query2 = "select nullif(m.username, '관리자') " +
+                    "from Member m ";
+
+            List<String> result = em.createQuery(query2, String.class)
                     .getResultList();
 
-            MemberDTO memberDTO = resultList.get(0);
-            System.out.println("memberDTO.getUsername() = " + memberDTO.getUsername());
-            System.out.println("memberDTO.getAge() = " + memberDTO.getAge());
-*/
-           String query= "select m from Member m left join Team t on m.username = t.name";
-           em.createQuery(query, Member.class)
-                   .setFirstResult(0)
-                   .setMaxResults(10)
-                   .getResultList();
-
+            for (String s : result) {
+                System.out.println("s = " + s);
+            }
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
