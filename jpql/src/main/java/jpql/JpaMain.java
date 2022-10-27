@@ -40,13 +40,18 @@ public class JpaMain {
                             "end " +
                             "from Member m";
 
-            String query2 = "select nullif(m.username, '관리자') " +
+            String query2 = "select nullif(m.username, '관리') " +
                     "from Member m ";
 
-            List<String> result = em.createQuery(query2, String.class)
+            String query3 = "select 'a' || 'b' From Member m";
+
+            String query4 = "select locate('de', 'abcdefg') From Member m";
+
+            String query5 = "select index(t.members) From Team t";
+            List<Integer> result = em.createQuery(query5, Integer.class)
                     .getResultList();
 
-            for (String s : result) {
+            for (Integer s : result) {
                 System.out.println("s = " + s);
             }
             tx.commit();
