@@ -19,41 +19,44 @@ public class JpaMain {
 
         try {
 
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
+            Team teamA = new Team();
+            teamA.setName("teamA");
+            em.persist(teamA);
 
-            Member member  = new Member();
-            member.setUsername("관리자");
-            member.setAge(10);
-            member.setTeam(team);
+            Team teamB = new Team();
+            teamB.setName("teamB");
+            em.persist(teamB);
 
-            em.persist(member);
+            Member member1  = new Member();
+            member1.setUsername("회원1");
+            member1.setTeam(teamA);
+            em.persist(member1);
+
+            Member member2  = new Member();
+            member2.setUsername("회원2");
+            member2.setTeam(teamB);
+            em.persist(member2);
+
+            Member member3  = new Member();
+            member3.setUsername("회원3");
+            member3.setTeam(teamB);
+            em.persist(member3);
+
+
             em.flush();
             em.clear();
 
-            String query1 =
-                    "select " +
-                            "case when m.age <= 10 then '학생요금' " +
-                            "     when m.age >= 60 then '경로요금' " +
-                            "     else '일반요금' " +
-                            "end " +
-                            "from Member m";
+            String query =
+                    "select m From Member m join fetch m.team";
 
-            String query2 = "select nullif(m.username, '관리') " +
-                    "from Member m ";
 
-            String query3 = "select 'a' || 'b' From Member m";
-
-            String query4 = "select locate('de', 'abcdefg') From Member m";
-
-            String query5 = "select index(t.members) From Team t";
-            List<Integer> result = em.createQuery(query5, Integer.class)
+            List<Member> result = em.createQuery(query, Member.class)
                     .getResultList();
-
-            for (Integer s : result) {
-                System.out.println("s = " + s);
+            
+            for (Member member : result) {
+                System.out.println("member.getUsername() + \" , \" +member.getTeam().getName() = " + member.getUsername() + " , " +member.getTeam().getName());
             }
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
