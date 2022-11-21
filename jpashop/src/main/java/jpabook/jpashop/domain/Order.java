@@ -9,6 +9,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "ORDERS")
+
 public class Order extends BaseEntity {
 
     @Id @GeneratedValue
@@ -26,21 +27,6 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
 
     private LocalDateTime orderDate;
 

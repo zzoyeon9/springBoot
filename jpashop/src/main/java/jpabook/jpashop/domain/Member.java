@@ -8,7 +8,7 @@ import static javax.persistence.FetchType.LAZY;
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @Column(name = "member_id")
     private Long id;
 
 
@@ -17,7 +17,7 @@ public class Member extends BaseEntity {
     private Team team;
 
     @Column(length = 10, name = "USERNAME")
-    private String username;
+    private String name;
 
     @Embedded
     private Address address;
@@ -31,11 +31,11 @@ public class Member extends BaseEntity {
     }
 
     public String getUsername() {
-        return username;
+        return name;
     }
 
     public void setUsername(String name) {
-        this.username = name;
+        this.name = name;
     }
 
     public Address getAddress() {
