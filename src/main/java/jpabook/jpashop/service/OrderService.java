@@ -69,6 +69,6 @@ public class OrderService {//이곳처럼 서비스 계층이 단순히 엔티�
      * 검색
      */
     public List<Order> findOrders(OrderSearch orderSearch) {
-        return orderRepository.findAllByString(orderSearch);
+        return orderRepository.findAll(orderSearch);
     }
 }
