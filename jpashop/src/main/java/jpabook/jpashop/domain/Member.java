@@ -1,57 +1,33 @@
 package jpabook.jpashop.domain;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
-import static javax.persistence.FetchType.LAZY;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Member extends BaseEntity {
+@Table
+@Getter @Setter //이게 ID, username 을 다 넣어주고 가져와주는 함수 자동 완성시켜줌
+public class Member {
 
     @Id @GeneratedValue
     @Column(name = "member_id")
     private Long id;
 
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
-
-    @Column(length = 10, name = "USERNAME")
+    @NotEmpty
     private String name;
+
 
     @Embedded
     private Address address;
 
-    public Long getId() {
-        return id;
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return name;
-    }
-
-    public void setUsername(String name) {
-        this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this); //**
-    }
 }
+
